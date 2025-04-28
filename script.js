@@ -1,47 +1,58 @@
-// script.js
-/**
- * Giới hạn số lần đoán (ví dụ: 10 lần).(done)
-
-Hiển thị lịch sử các lượt đoán.(done)
-
-Cho phép chơi lại ("Play Again" button).(done)
-
-Hiệu ứng thắng cuộc (như confetti rơi).
-
-Chọn mức độ khó: 4 màu, 5 màu, 6 màu...
-
-Giao diện đẹp hơn (drag-drop chọn màu),
-
-Thêm bộ đếm số lượt đoán,
-
-
- */
-const colors = ["1", "2", "3", "4", "5", "6"];
+let nums = [];
 let answer = [];
+let difficulty = "";
+let countNum = 0;
+let numChoices = 4;
+
+function selectDifficulty() {
+    const selected = document.querySelector('input[name="difficulty"]:checked');
+    if (!selected) return;
+
+    difficulty = selected.value;
+    localStorage.setItem('selectedDifficulty', difficulty); // Lưu lại chế độ
+    location.reload(); // Reload lại trang
+}
 
 function init() {
-    const selects = document.querySelectorAll('.choice');
-    selects.forEach(select => {
-        colors.forEach(color => {
+    const guessArea = document.getElementById('guess-area');
+    guessArea.innerHTML = ''; // Xóa cũ
+
+    for (let i = 0; i < numChoices; i++) {
+        const select = document.createElement('select');
+        select.className = 'choice';
+        nums.forEach(num => {
             const option = document.createElement('option');
-            option.value = color;
-            option.text = color;
+            option.value = num;
+            option.text = num;
             select.appendChild(option);
         });
-    });
+        guessArea.appendChild(select);
+    }
 
     generateAnswer();
 }
 
 function generateAnswer() {
     answer = [];
-    for (let i = 0; i < 4; i++) {
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        answer.push(randomColor);
+
+    if (difficulty === "easy") {
+        // Không trùng
+        let temp = [...nums];
+        for (let i = 0; i < 4; i++) {
+            const idx = Math.floor(Math.random() * temp.length);
+            answer.push(temp[idx]);
+            temp.splice(idx, 1);
+        }
+    } else {
+        // Có thể trùng
+        for (let i = 0; i < numChoices; i++) {
+            const randomNumber = nums[Math.floor(Math.random() * nums.length)];
+            answer.push(randomNumber);
+        }
     }
-    console.log("Answer (for testing):", answer); 
+    console.log("Answer (for testing):", answer);
 }
-let countNum = 0;
+
 function submitGuess() {
     const selects = document.querySelectorAll('.choice');
     let guess = Array.from(selects).map(select => select.value);
@@ -52,19 +63,15 @@ function submitGuess() {
     let answerCopy = [...answer];
     let guessCopy = [...guess];
 
-
-    // Bước 1: Đếm đúng vị trí
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < guess.length; i++) {
         if (guess[i] === answer[i]) {
             correctPosition++;
             answerCopy[i] = null;
             guessCopy[i] = null;
         }
-
     }
 
-    // Bước 2: Đếm đúng màu sai vị trí
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < guess.length; i++) {
         if (guessCopy[i] && answerCopy.includes(guessCopy[i])) {
             correctColor++;
             answerCopy[answerCopy.indexOf(guessCopy[i])] = null;
@@ -72,24 +79,62 @@ function submitGuess() {
     }
 
     countNum++;
-    // Bước 3: Hiển thị kết quả
     const feedback = document.getElementById('feedback');
-    feedback.innerHTML += `<div>Bạn chọn: ${guess.join(", ")} 
-  <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
+    if (difficulty === "easy") {
+        feedback.innerHTML += `<div class="response">Lần ${countNum}: Bạn chọn: ${guess.join(", ")} 
+        <br>Kết quả: ${correctPosition} vị trí chính xác</div><hr>`;
+
+    } else {
+        feedback.innerHTML += `<div class="response">Lần ${countNum}: Bạn chọn: ${guess.join(", ")} 
+    <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
+    }
     if (countNum === 11) {
-        alert("Bạn đã hết lượt chơi, reset đê👌");
+        playAlertSound();
+        setTimeout(() => {
+        alert("Bạn đã hết lượt chơi, reset để chơi lại!");
         location.reload();
-        
+    }, 300);
     }
 
-    // Thắng cuộc
-    if (correctPosition === 4) {
-        feedback.innerHTML += `<h2>🎉 Ảo thật đấy! 🎉</h2>`;
+    if (correctPosition === answer.length) {
+        confirm("🎉 Tuyệt vời! 🎉\nBạn có muốn chơi tiếp không?") && location.reload();
     }
-
-
 }
+
 function resetGame() {
-    confirm("Chơi lại game nha bạn ╰(*°▽°*)╯") && location.reload();
+    localStorage.removeItem('selectedDifficulty');
+    location.reload();
 }
-window.onload = init;
+function playAlertSound() {
+    const sound = document.getElementById("alertSound");
+    sound.currentTime = 0; // cho âm thanh luôn phát từ đầu
+    sound.play();
+}
+window.onload = () => {
+    const savedDifficulty = localStorage.getItem('selectedDifficulty');
+    if (savedDifficulty) {
+        difficulty = savedDifficulty;
+        document.getElementById('game').style.display = 'block';
+
+        // Bật lại radio đã chọn
+        const radios = document.querySelectorAll('input[name="difficulty"]');
+        radios.forEach(radio => {
+            if (radio.value === difficulty) {
+                radio.checked = true;
+            }
+        });
+
+        if (difficulty === "easy") {
+            nums = ["1", "2", "3", "4"];
+            numChoices = 4;
+        } else if (difficulty === "medium") {
+            nums = ["1", "2", "3", "4", "5", "6"];
+            numChoices = 4;
+        } else if (difficulty === "hard") {
+            nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            numChoices = 6;
+        }
+
+        init();
+    }
+};
