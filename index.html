@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>MASTERMIND</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+  <audio id="alertSound" src="sound/dongu.ogg"></audio>
+
   <h1>MASTERMIND</h1>
 
-  <div id="guess-area">
-    <select class="choice"></select>
-    <select class="choice"></select>
-    <select class="choice"></select>
-    <select class="choice"></select>
+  <h2>Chọn chế độ chơi:</h2>
+  <div id="difficulty-options">
+    <table border="1" cellpadding="10" cellspacing="0" class="dif-table">
+      <th><label><input type="radio" name="difficulty" value="easy" onchange="selectDifficulty()"> Dễ </label></th>
+      <th><label><input type="radio" name="difficulty" value="medium" onchange="selectDifficulty()"> Trung bình </label>
+      </th>
+      <th><label><input type="radio" name="difficulty" value="hard" onchange="selectDifficulty()"> Khó </label></th>
+    </table>
   </div>
 
-  <button onclick="submitGuess()" class="submit">Submit</button>
+  <div id="game" style="display:none;">
+    <div id="guess-area"></div>
 
-  <div id="feedback"></div>
-  <p><button onclick="resetGame()" class="reset">Reset</button></p>
+    <button onclick="submitGuess()" class="submit">Submit</button>
+    <div id="feedback"></div>
+    <p><button onclick="resetGame()" class="reset">Reset</button></p>
+  </div>
+
+
   <script src="script.js"></script>
 </body>
+
 </html>
