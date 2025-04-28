@@ -16,7 +16,7 @@ Thêm bộ đếm số lượt đoán,
 
 
  */
-const colors = ["1", "2", "3", "4", "5", "6"];
+const colors = ["1", "2", "3", "4"];
 let answer = [];
 
 function init() {
@@ -75,7 +75,7 @@ function submitGuess() {
     // Bước 3: Hiển thị kết quả
     const feedback = document.getElementById('feedback');
     feedback.innerHTML += `<div>Bạn chọn: ${guess.join(", ")} 
-  <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
+  <br>Kết quả: ${correctPosition} vị trí chính xác</div><hr>`;
     if (countNum === 11) {
         alert("Bạn đã hết lượt chơi, reset đê👌");
         location.reload();
