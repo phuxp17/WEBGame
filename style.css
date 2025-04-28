@@ -1,0 +1,50 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#guess-area {
+    margin-bottom: 20px;
+}
+
+select.choice {
+    width: 60px;
+    height: 60px;
+    font-size: 16px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+button.submit {
+    background-color: aqua;
+    border: olivedrab 1px solid;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+button.reset {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+reset:hover {
+    background-color: #ff1a1a;
+}
+
+#feedback {
+    margin-top: 30px;
+    font-size: 20px;
+}
