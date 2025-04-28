@@ -79,7 +79,7 @@ function submitGuess() {
     if (countNum === 11) {
         alert("Bạn đã hết lượt chơi, reset đê👌");
         location.reload();
-        return;
+        
     }
 
     // Thắng cuộc
