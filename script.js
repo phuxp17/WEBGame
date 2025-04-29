@@ -88,12 +88,20 @@ function submitGuess() {
         feedback.innerHTML += `<div class="response">Lần ${countNum}: Bạn chọn: ${guess.join(", ")} 
     <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
     }
-    if (countNum === 11) {
+    if (countNum === 21 && difficulty === "hard") {
         playAlertSound();
         setTimeout(() => {
-        alert("Bạn đã hết lượt chơi, reset để chơi lại!");
-        location.reload();
-    }, 300);
+            alert("Bạn đã hết lượt chơi, reset thoai!");location.reload();
+            
+        }, 300);
+    }
+
+    else if (countNum === 11 && (difficulty === "easy" ||difficulty === "medium")) {
+        playAlertSound();
+        setTimeout(() => {
+            alert("Bạn đã hết lượt chơi, reset thoai!");location.reload();
+            
+        }, 300);
     }
 
     if (correctPosition === answer.length) {
@@ -107,34 +115,43 @@ function resetGame() {
 }
 function playAlertSound() {
     const sound = document.getElementById("alertSound");
-    sound.currentTime = 0; // cho âm thanh luôn phát từ đầu
+    sound.currentTime = 0;
     sound.play();
+}
+function showPopup() {
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('popup-overlay').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('popup-overlay').style.display = 'none';
 }
 window.onload = () => {
     const savedDifficulty = localStorage.getItem('selectedDifficulty');
-    if (savedDifficulty) {
-        difficulty = savedDifficulty;
-        document.getElementById('game').style.display = 'block';
 
-        // Bật lại radio đã chọn
-        const radios = document.querySelectorAll('input[name="difficulty"]');
-        radios.forEach(radio => {
-            if (radio.value === difficulty) {
-                radio.checked = true;
-            }
-        });
+    difficulty = savedDifficulty;
+    document.getElementById('game').style.display = 'block';
 
-        if (difficulty === "easy") {
-            nums = ["1", "2", "3", "4"];
-            numChoices = 4;
-        } else if (difficulty === "medium") {
-            nums = ["1", "2", "3", "4", "5", "6"];
-            numChoices = 4;
-        } else if (difficulty === "hard") {
-            nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-            numChoices = 6;
+    // Bật lại radio đã chọn
+    const radios = document.querySelectorAll('input[name="difficulty"]');
+    radios.forEach(radio => {
+        if (radio.value === difficulty) {
+            radio.checked = true;
         }
+    });
 
-        init();
+    if (difficulty === "easy") {
+        nums = ["1", "2", "3", "4"];
+        numChoices = 4;
+    } else if (difficulty === "medium") {
+        nums = ["1", "2", "3", "4", "5", "6"];
+        numChoices = 4;
+    } else if (difficulty === "hard") {
+        nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        numChoices = 6;
     }
+
+    init();
+
 };

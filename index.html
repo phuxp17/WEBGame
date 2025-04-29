@@ -8,16 +8,20 @@
 </head>
 
 <body>
-  <audio id="alertSound" src="sound/dongu.ogg"></audio>
-
+  <div id="popup-overlay"></div>
+  <div id="popup">
+    <h1>Chào mừng bạn đến với game giải đố mastermind!</h1>
+    <h2>Luật chơi</h2>
+    <p></p>
+    <button onclick="closePopup()">Đóng</button>
+  </div>
   <h1>MASTERMIND</h1>
-
-  <h2>Chọn chế độ chơi:</h2>
+  <audio id="alertSound" src="sound/dongu.ogg"></audio>
+  <h2>Chọn chế độ chơi</h2>
   <div id="difficulty-options">
     <table border="1" cellpadding="10" cellspacing="0" class="dif-table">
       <th><label><input type="radio" name="difficulty" value="easy" onchange="selectDifficulty()"> Dễ </label></th>
-      <th><label><input type="radio" name="difficulty" value="medium" onchange="selectDifficulty()"> Trung bình </label>
-      </th>
+      <th><label><input type="radio" name="difficulty" value="medium" onchange="selectDifficulty()"> Trung bình </label></th>
       <th><label><input type="radio" name="difficulty" value="hard" onchange="selectDifficulty()"> Khó </label></th>
     </table>
   </div>
