@@ -451,6 +451,13 @@ button.close {
 
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
+    .card {
+
+        max-width: 90%;
+        height: 500px;
+        margin: 0 auto;
+        padding: 1em 0.5em;
+    }
 
     #feedback {
 
