@@ -452,18 +452,26 @@ button.close {
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
     #popup {
-        width: 90vw;             /* Chiếm 90% chiều rộng màn hình */
-        max-height: 80vh;        /* Tối đa 80% chiều cao màn hình */
-        overflow-y: auto;        /* Cho phép cuộn nếu nội dung dài */
-        font-size: 20px;        /* Thu nhỏ font nhẹ để vừa vặn hơn */
-        padding: 15px;           /* Giảm padding để tiết kiệm không gian */
+        width: 90%;
+        position: fixed;
+        font-size: 16px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow-y: auto;
+        z-index: 9999;
+
+
     }
-    
-    #popup-overlay {
-        width: 100vw;
-        height: 100vh;
-    }
-    
+
+
+
 
     #feedback {
 

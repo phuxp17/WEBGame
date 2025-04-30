@@ -14,8 +14,8 @@
   <div id="popup" class="card">
     <h2>Luật chơi</h2>
     <p>
-      - Mỗi lượt, bạn chọn dãy số từ danh sách.<br>
-      - Máy sẽ có một dãy số ngẫu nhiên (ẩn).<br>
+      - Sẽ một dãy số ngẫu nhiên (ẩn) được tạo ra.<br>
+        Mỗi lượt, bạn chọn dãy số từ danh sách.<br>
       - Nhiệm vụ của bạn là đoán đúng thứ tự và giá trị các số.<br>
       - Gợi ý sau mỗi lượt:<br>
       + <b>x vị trí chính xác</b> (đúng số và đúng chỗ)<br>
@@ -30,16 +30,15 @@
 
   </div>
   <h1>MASTERMIND</h1>
-  <audio id="alertSound" src="sound/dongu.ogg"></audio>
   <button onclick="showPopup()" class="rule-button">📜 Xem luật chơi</button>
   <h2>Chọn chế độ chơi</h2>
 
   <!-- From Uiverse.io by andrew-demchenk0 -->
   <div class="container">
     <div class="radio-wrapper">
-
+      <input class="input" name="difficulty" id="value-1" type="radio" value="easy" onchange="selectDifficulty()">
       <div class="btn">
-        <input class="input" name="difficulty" id="value-1" type="radio" value="easy" onchange="selectDifficulty()">
+
         <span aria-hidden="">_</span>Easy
         <span class="btn__glitch" aria-hidden="">_Easy🐥</span>
         <label class="number">r1</label>
@@ -47,23 +46,27 @@
       </div>
     </div>
     <div class="radio-wrapper">
-      
+      <input class="input" name="difficulty" id="value-2" type="radio" value="medium" onchange="selectDifficulty()">
       <div class="btn">
-        <input class="input" name="difficulty" id="value-2" type="radio" value="medium" onchange="selectDifficulty()">
+
         _Medium<span aria-hidden="">_</span>
         <span class="btn__glitch" aria-hidden="">_M_e_d_i_u_m_</span>
         <label class="number">r2</label>
       </div>
     </div>
     <div class="radio-wrapper">
-      
+      <input class="input" name="difficulty" id="value-3" type="radio" value="hard" onchange="selectDifficulty()">
       <div class="btn">
-        <input class="input" name="difficulty" id="value-3" type="radio" value="hard" onchange="selectDifficulty()">
+
         🔥Hard_<span aria-hidden=""></span>
         <span class="btn__glitch" aria-hidden="">Hard_</span>
         <label class="number">r3</label>
       </div>
     </div>
+  </div>
+  <div id="winPopup" class="winpopup" style="display:none;">
+    <h2>🎉 Chúc mừng bạn đã chiến thắng!</h2>
+    <button onclick="resetGame()" class="reset">Chơi lại</button>
   </div>
 
 
@@ -75,9 +78,12 @@
     <div id="feedback"></div>
     <button onclick="resetGame()" class="reset"><i class="fas fa-redo"></i></button>
   </div>
-
+  <audio id="alertSound" src="sound/dongu.ogg"></audio>
+  <audio id="winSound" src="sound/win.ogg"></audio>
 
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 </body>
 
 </html>

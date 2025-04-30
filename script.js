@@ -105,16 +105,21 @@ function submitGuess() {
     }
 
     if (correctPosition === answer.length) {
-        confirm("🎉 Tuyệt vời! 🎉\nBạn có muốn chơi tiếp không?") && location.reload();
+        playWinSound();
+        triggerWinEffect();
     }
 }
 
 function resetGame() {
-    localStorage.removeItem('selectedDifficulty');
     location.reload();
 }
 function playAlertSound() {
     const sound = document.getElementById("alertSound");
+    sound.currentTime = 0;
+    sound.play();
+}
+function playWinSound() {
+    const sound = document.getElementById("winSound");
     sound.currentTime = 0;
     sound.play();
 }
@@ -127,6 +132,26 @@ function closePopup() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('popup-overlay').style.display = 'none';
 }
+function closewPopup() {
+    document.getElementById("winPopup").style.display = "none";
+}
+
+function triggerWinEffect() {
+    // Gọi pháo hoa nhiều lần để tạo hiệu ứng hoành tráng
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }, i * 300);
+    }
+
+    // Hiển thị popup thắng
+    document.getElementById("winPopup").style.display = "block";
+}
+
 window.onload = () => {
     const savedDifficulty = localStorage.getItem('selectedDifficulty');
 
@@ -145,7 +170,7 @@ window.onload = () => {
         nums = ["1", "2", "3", "4"];
         numChoices = 4;
     } else if (difficulty === "medium") {
-        nums = ["1", "2", "3", "4", "5", "6"];
+        nums = ["1", "2", "3", "4", "5", "6", "7"];
         numChoices = 4;
     } else if (difficulty === "hard") {
         nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
