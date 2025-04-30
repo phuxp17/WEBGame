@@ -451,13 +451,19 @@ button.close {
 
 /* Responsive Design for Mobile */
 @media screen and (max-width: 768px) {
-    .card {
-
-        max-width: 90%;
-        height: 500px;
-        margin: 0 auto;
-        padding: 1em 0.5em;
+    #popup {
+        width: 90vw;             /* Chiếm 90% chiều rộng màn hình */
+        max-height: 80vh;        /* Tối đa 80% chiều cao màn hình */
+        overflow-y: auto;        /* Cho phép cuộn nếu nội dung dài */
+        font-size: 20px;        /* Thu nhỏ font nhẹ để vừa vặn hơn */
+        padding: 15px;           /* Giảm padding để tiết kiệm không gian */
     }
+    
+    #popup-overlay {
+        width: 100vw;
+        height: 100vh;
+    }
+    
 
     #feedback {
 
