@@ -91,16 +91,16 @@ function submitGuess() {
     if (countNum === 21 && difficulty === "hard") {
         playAlertSound();
         setTimeout(() => {
-            alert("Bạn đã hết lượt chơi, reset thoai!");location.reload();
-            
+            alert("Bạn đã hết lượt chơi, reset thoai!"); location.reload();
+
         }, 300);
     }
 
-    else if (countNum === 11 && (difficulty === "easy" ||difficulty === "medium")) {
+    else if (countNum === 11 && (difficulty === "easy" || difficulty === "medium")) {
         playAlertSound();
         setTimeout(() => {
-            alert("Bạn đã hết lượt chơi, reset thoai!");location.reload();
-            
+            alert("Bạn đã hết lượt chơi, reset thoai!"); location.reload();
+
         }, 300);
     }
 

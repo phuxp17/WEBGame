@@ -3,35 +3,77 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MASTERMIND</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div id="popup-overlay"></div>
-  <div id="popup">
-    <h1>Chào mừng bạn đến với game giải đố mastermind!</h1>
+  <div id="popup" class="card">
     <h2>Luật chơi</h2>
-    <p></p>
-    <button onclick="closePopup()">Đóng</button>
+    <p>
+      - Mỗi lượt, bạn chọn dãy số từ danh sách.<br>
+      - Máy sẽ có một dãy số ngẫu nhiên (ẩn).<br>
+      - Nhiệm vụ của bạn là đoán đúng thứ tự và giá trị các số.<br>
+      - Gợi ý sau mỗi lượt:<br>
+      + <b>x vị trí chính xác</b> (đúng số và đúng chỗ)<br>
+      + <b>y số đúng nhưng sai vị trí</b> (chỉ hiện ở Medium và Hard)<br>
+      - Easy: 4 số, không trùng, 10 lượt.<br>
+      - Medium: 4 số, có thể trùng, 10 lượt.<br>
+      - Hard: 6 số, có thể trùng, 20 lượt.
+    </p>
+
+    <button onclick="closePopup()" class="close">Đóng</button>
+
+
   </div>
   <h1>MASTERMIND</h1>
   <audio id="alertSound" src="sound/dongu.ogg"></audio>
+  <button onclick="showPopup()" class="rule-button">📜 Xem luật chơi</button>
   <h2>Chọn chế độ chơi</h2>
-  <div id="difficulty-options">
-    <table border="1" cellpadding="10" cellspacing="0" class="dif-table">
-      <th><label><input type="radio" name="difficulty" value="easy" onchange="selectDifficulty()"> Dễ </label></th>
-      <th><label><input type="radio" name="difficulty" value="medium" onchange="selectDifficulty()"> Trung bình </label></th>
-      <th><label><input type="radio" name="difficulty" value="hard" onchange="selectDifficulty()"> Khó </label></th>
-    </table>
+
+  <!-- From Uiverse.io by andrew-demchenk0 -->
+  <div class="container">
+    <div class="radio-wrapper">
+
+      <div class="btn">
+        <input class="input" name="difficulty" id="value-1" type="radio" value="easy" onchange="selectDifficulty()">
+        <span aria-hidden="">_</span>Easy
+        <span class="btn__glitch" aria-hidden="">_Easy🐥</span>
+        <label class="number">r1</label>
+
+      </div>
+    </div>
+    <div class="radio-wrapper">
+      
+      <div class="btn">
+        <input class="input" name="difficulty" id="value-2" type="radio" value="medium" onchange="selectDifficulty()">
+        _Medium<span aria-hidden="">_</span>
+        <span class="btn__glitch" aria-hidden="">_M_e_d_i_u_m_</span>
+        <label class="number">r2</label>
+      </div>
+    </div>
+    <div class="radio-wrapper">
+      
+      <div class="btn">
+        <input class="input" name="difficulty" id="value-3" type="radio" value="hard" onchange="selectDifficulty()">
+        🔥Hard_<span aria-hidden=""></span>
+        <span class="btn__glitch" aria-hidden="">Hard_</span>
+        <label class="number">r3</label>
+      </div>
+    </div>
   </div>
+
+
 
   <div id="game" style="display:none;">
     <div id="guess-area"></div>
 
     <button onclick="submitGuess()" class="submit">Submit</button>
     <div id="feedback"></div>
-    <p><button onclick="resetGame()" class="reset">Reset</button></p>
+    <button onclick="resetGame()" class="reset"><i class="fas fa-redo"></i></button>
   </div>
 
 
