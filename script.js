@@ -3,6 +3,12 @@ let answer = [];
 let difficulty = "";
 let countNum = 0;
 let numChoices = 4;
+let endTime;
+let totalTime;
+let score = 0;
+let startTime = null;
+let timerStarted = false;
+
 
 function selectDifficulty() {
     const selected = document.querySelector('input[name="difficulty"]:checked');
@@ -20,6 +26,13 @@ function init() {
     for (let i = 0; i < numChoices; i++) {
         const select = document.createElement('select');
         select.className = 'choice';
+        select.addEventListener('change', () => {
+            if (!timerStarted) {
+                startTime = new Date();
+                timerStarted = true;
+                console.log("⏱ Bắt đầu tính thời gian!");
+            }
+        });
         nums.forEach(num => {
             const option = document.createElement('option');
             option.value = num;
@@ -30,6 +43,8 @@ function init() {
     }
 
     generateAnswer();
+    
+
 }
 
 function generateAnswer() {
@@ -56,7 +71,6 @@ function generateAnswer() {
 function submitGuess() {
     const selects = document.querySelectorAll('.choice');
     let guess = Array.from(selects).map(select => select.value);
-
     let correctPosition = 0;
     let correctColor = 0;
 
@@ -109,12 +123,14 @@ function submitGuess() {
     if (correctPosition === answer.length) {
         playWinSound();
         triggerWinEffect();
+
     }
 }
-
+// Reset game
 function resetGame() {
     location.reload();
 }
+// Âm thanh thông báo
 function playAlertSound() {
     const sound = document.getElementById("alertSound");
     sound.currentTime = 0;
@@ -125,11 +141,12 @@ function playWinSound() {
     sound.currentTime = 0;
     sound.play();
 }
+// Hiện popup
 function showPopup() {
     document.getElementById('popup').style.display = 'block';
     document.getElementById('popup-overlay').style.display = 'block';
 }
-
+// Đóng popup
 function closePopup() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('popup-overlay').style.display = 'none';
@@ -137,9 +154,8 @@ function closePopup() {
 function closewPopup() {
     document.getElementById("winPopup").style.display = "none";
 }
-
+// Hiệu ứng chiến thắngthắng
 function triggerWinEffect() {
-    // Gọi pháo hoa nhiều lần để tạo hiệu ứng hoành tráng
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             confetti({
@@ -149,7 +165,26 @@ function triggerWinEffect() {
             });
         }, i * 300);
     }
+    endTime = new Date();
+    totalTime = Math.floor((endTime - startTime) / 1000); // Tính thời gian chơi (giây)
 
+    // Tính điểm: bạn có thể tự chỉnh theo mức độ
+    // Ví dụ: điểm = (số lượt tối đa - số lượt đã dùng + 1) * hệ số theo độ khó - thời gian
+    let maxTurns = (difficulty === "hard") ? 21 : 11;
+    let baseScore = (maxTurns - countNum + 1) * 10;
+
+    if (difficulty === "medium") baseScore *= 1.5;
+    if (difficulty === "hard") baseScore *= 2;
+
+    score = Math.max(0, Math.floor(baseScore - totalTime));
+
+    // Hiển thị thời gian và điểm
+    document.getElementById("winPopup").innerHTML += `
+    <h2>🎉 Chúc mừng bạn đã chiến thắng!</h2>
+    <div>⏱ Thời gian chơi: ${totalTime} giây</div>
+    <div>🏆 Điểm của bạn: ${score} điểm</div>
+    <button onclick="resetGame()" class="reset">Chơi lại</button>
+`;
     // Hiển thị popup thắng
     document.getElementById("winPopup").style.display = "block";
 }
