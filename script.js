@@ -88,6 +88,8 @@ function submitGuess() {
         feedback.innerHTML += `<div class="response">Lần ${countNum}: Bạn chọn: ${guess.join(", ")} 
     <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
     }
+    feedback.scrollTop = feedback.scrollHeight;
+
     if (countNum === 21 && difficulty === "hard") {
         playAlertSound();
         setTimeout(() => {
