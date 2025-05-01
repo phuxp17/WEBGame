@@ -103,28 +103,23 @@ function submitGuess() {
     <br>Kết quả: ${correctPosition} vị trí chính xác, ${correctColor} số đúng nhưng sai vị trí</div><hr>`;
     }
     feedback.scrollTop = feedback.scrollHeight;
-
-    if (countNum === 21 && difficulty === "hard") {
-        playAlertSound();
-        setTimeout(() => {
-            alert("Bạn đã hết lượt chơi, reset thoai!"); location.reload();
-
-        }, 300);
-    }
-
-    else if (countNum === 11 && (difficulty === "easy" || difficulty === "medium")) {
-        playAlertSound();
-        setTimeout(() => {
-            alert("Bạn đã hết lượt chơi, reset thoai!"); location.reload();
-
-        }, 300);
-    }
-
+    
+    // Kiểm tra thắng
     if (correctPosition === answer.length) {
         playWinSound();
         triggerWinEffect();
-
+        return;
     }
+    if (countNum === 20 && difficulty === "hard"||
+        countNum === 10 && (difficulty === "easy" || difficulty === "medium")
+    ) {
+        playAlertSound();
+        setTimeout(() => {
+            alert("Bạn đã hết lượt chơi, reset thoai!"); location.reload();
+
+        }, 300);
+    }
+
 }
 // Reset game
 function resetGame() {
@@ -171,7 +166,7 @@ function triggerWinEffect() {
     // Tính điểm: bạn có thể tự chỉnh theo mức độ
     // Ví dụ: điểm = (số lượt tối đa - số lượt đã dùng + 1) * hệ số theo độ khó - thời gian
     let maxTurns = (difficulty === "hard") ? 21 : 11;
-    let baseScore = (maxTurns - countNum + 1) * 10;
+    let baseScore = (maxTurns - countNum ) * 10;
 
     if (difficulty === "medium") baseScore *= 1.5;
     if (difficulty === "hard") baseScore *= 2;
