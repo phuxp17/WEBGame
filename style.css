@@ -7,23 +7,23 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* background: #f0f4f8; */
     min-height: 100vh;
     padding: 20px;
     text-align: center;
-    background-image: url("img/wallpaper.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #d1d0d0, #bbc9f7);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 h1 {
-    color: #ccd1d6;
+    color: #272828;
     margin-bottom: 10px;
 }
 
 h2 {
-    color: #d5dce4;
+    color: #262627;
 }
 
 /* Bảng chọn độ khó */
